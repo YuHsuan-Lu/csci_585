@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document>
+<Style id="convexhull">
+      <LineStyle>
+        <color>7f0000ff</color>
+        <width>4</width>
+      </LineStyle>
+      <PolyStyle>
+        <color>7f0000ff</color>
+        <colorMode>normal</colorMode>
+        <fill>1</fill>
+        <outline>1</outline>
+      </PolyStyle>
+    </Style>
+
+    <Style id="nn">
+      <LineStyle>
+        <color>7f00ffff</color>
+        <width>4</width>
+      </LineStyle>
+    </Style>
+<Style id="z1">
+<IconStyle><Icon><href>http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png</href></Icon></IconStyle>
+</Style>
+<Folder>
+    <name>Hw3</name>
+    <open>1</open>
+    <Folder>
+      <name>Step 5</name>
+      <open>1</open>
+      <Placemark>
+        <name>ConvexHull</name>
+        <styleUrl>#convexhull</styleUrl>
+        <Polygon>
+        <extrude>1</extrude>
+        <altitudeMode>relativeToGround</altitudeMode>
+        <outerBoundaryIs>
+            <LinearRing>
+            <coordinates>
+                -118.286575516796,34.018668956154976,10
+                -118.29357708815326,34.01985688138196,10
+                -118.28327865284001,34.02216766252496,10
+                -118.28308854656146,34.021583753952484,10
+                -118.28342489907803,34.020534962617944,10
+                -118.28417473579191,34.0189230599306,10
+                -118.286575516796,34.018668956154976,10
+            </coordinates>
+            </LinearRing>
+        </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <name>NN</name>
+    <Placemark>
+      <name>NN</name>
+      <styleUrl>#nn</styleUrl>
+      <LineString>
+      <extrude>1</extrude>
+        <altitudeMode>relativeToGround</altitudeMode>
+        <coordinates> 
+            -118.29357708815326,34.01985688138196,10
+            -118.28908207196147,34.0205650260332,10
+        </coordinates>
+      </LineString>
+    </Placemark>
+      </Folder>
+    <Folder>
+      <name>Home</name>
+      <open>1</open>
+      <Placemark>
+        <name>Home</name>
+        <styleUrl>#z1</styleUrl>
+        <Point>
+          <coordinates>-118.29357708815326,34.01985688138196,0</coordinates>
+        </Point>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name>Water Works</name>
+      <open>1</open>
+      <Placemark>
+        <name>Viterbi Ft</name>
+        <styleUrl>#z1</styleUrl>
+        <Point>
+          <coordinates>-118.28908207196147,34.0205650260332,0</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Prentiss Ft</name>
+        <styleUrl>#z1</styleUrl>
+        <Point>
+          <coordinates>-118.28452204562171,34.02069626134655,0</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Trojan Ft</name>
+        <styleUrl>#z1</styleUrl>
+        <Point>
+          <coordinates>-118.28525531212273,34.020493710534865,0</coordinates>
+        </Point>
+      </Placemark><Placemark>
+        <name>CCF Ft</name>
+        <styleUrl>#z1</styleUrl>
+        <Point>
+          <coordinates>-118.28342489907803,34.020534962617944,0</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Leavy Lib Pool</name>
+        <styleUrl>#z1</styleUrl>
+        <Point>
+          <coordinates>-118.28308854656146,34.021583753952484,0</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Generations Ft</name>
+        <styleUrl>#z1</styleUrl>
+        <Point>
+          <coordinates>-118.28327865284001,34.02216766252496,0</coordinates>
+        </Point>
+      </Placemark>
+      <styleUrl>#checkHideChildrenExample</styleUrl>
+    </Folder>
+    <Folder>
+      <name>Libraries</name>
+      <open>1</open>
+      <Placemark>
+        <name>Sci and Eng Lib</name>
+        <styleUrl>#z1</styleUrl>
+        <Point>
+          <coordinates>-118.28875020157386,34.01980265046844,0</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>H Lib of Phi</name>
+        <styleUrl>#z1</styleUrl>
+        <Point>
+          <coordinates>-118.286575516796,34.018668956154976,0</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>AVC Law Lib</name>
+        <styleUrl>#z1</styleUrl>
+        <Point>
+          <coordinates>-118.28417473579191,34.0189230599306,0</coordinates>
+        </Point>
+      </Placemark><Placemark>
+        <name>Doheny Lib</name>
+        <styleUrl>#z1</styleUrl>
+        <Point>
+          <coordinates>-118.28452204562171,34.02069626134655,0</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Lib of INAP</name>
+        <styleUrl>#z1</styleUrl>
+        <Point>
+          <coordinates>-118.28369381499044,34.021358004415085,0</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Leavy Lib</name>
+        <styleUrl>#z1</styleUrl>
+        <Point>
+          <coordinates>-118.28327638023804,34.021333944791934,0</coordinates>
+        </Point>
+      </Placemark>
+    </Folder>
+    
+  </Folder>
+
+<!-- <Folder>
+  <name>Water Works</name>
+  <open>2</open>
+  <description>
+    This folder hold the location of all water works in USC.
+  </description>
+  <Placemark>
+    <name>Viterbi ft.</name>
+    <Icon><href>https://imgur.com/OxHKeTw</href></Icon>
+    <description>This fountain is located in the Epstein Family Plaza near Viterbi School.</description>
+    <Point>
+      <coordinates>-118.28908207196147,34.0205650260332,0</coordinates>
+    </Point>
+  </Placemark>
+</Folder> -->
+</Document>
+</kml>

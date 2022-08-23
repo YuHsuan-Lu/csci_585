@@ -1,0 +1,142 @@
+{\rtf1\ansi\ansicpg950\cocoartf2513
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red38\green38\blue38;\red75\green27\blue2;\red242\green242\blue242;
+}
+{\*\expandedcolortbl;;\cssrgb\c20000\c20000\c20000;\cssrgb\c36863\c14510\c392;\cssrgb\c96078\c96078\c96078;
+}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs38 \cf2 \expnd0\expndtw0\kerning0
+\'a0\
+\pard\pardeftab720\partightenfactor0
+
+\fs46 \cf2 HW3: Geospatial data handling\
+\pard\pardeftab720\partightenfactor0
+
+\fs42 \cf2 Total points: 6\
+In this HW, you are going to collect, store, query/process and visualize spatial data \uc0\u9786 \
+You'll be using the KML file format, shapefile format (.shp) Google Earth, Postgres+PostGIS, ArcGIS, JavaScript, R.\
+The exercise will give you a taste of working with spatial data, use of spatial file formats and spatial query functions, use of JS and R libraries for plotting map coords, generating spatial data via calculation - all of which are quite useful from a real-world (or job interview) perspective.\
+\pard\pardeftab720\partightenfactor0
+
+\fs30 \cf2 \
+\pard\pardeftab720\partightenfactor0
+
+\fs42 \cf2 1. You need to create (generate/collect) latitude,longitude pairs (ie. spatial coordinates) for 13 locations. One of those will be where your home/apartment/dorm room is. The other 12 would have to be these: 6 libraries, 6 'waterworks' (fountains, etc.). If you are not on campus, pick 6+6 locations belonging to two other categories (eg. restaurants, coffeeshops, bars, grocery stores, downtown buildings...).\
+How would you obtain (lat,long) spatial coordinates at a location? You can do so, one of two ways:\
+\pard\pardeftab720\partightenfactor0
+
+\fs38 \cf2 \'95 using the Chrome browser, simply bring up {\field{\*\fldinst{HYPERLINK "https://bytes.usc.edu/cs585/m22_datadatadata/hw/HW3/geolocate_mod/geolocate_mod.html"}}{\fldrslt \cf3 this}} page on your smartphone, and write down the (latitude,longitude) values that get shown when you load/refresh the page :) As you can see, the page shows your location on a map - cool! Be sure to enable cross-site script loading when you run this - click on the shield icon at the right of the URL bar, and click on 'Load unsafe scripts'. Alternately, you can use {\field{\*\fldinst{HYPERLINK "https://bytes.usc.edu/cs585/m22_datadatadata/hw/HW3/geoloc2/run.html"}}{\fldrslt \cf3 this}} page to obtain the (latitude,longitude) coordinates - for this to work, be sure that the browser url starts with https:// [type this in, if you need to].\
+\'95 using your phone's built-in GPS/compass app, simply read off the displayed GPS coordinate values (if the coordinate display is in degrees, minutes and seconds, you need to convert the minutes,seconds pair of values into a single fractional degree value - one degree is subdivided into 60 minutes (60'), and one minute is subdivided into 60 seconds (60'') - so for example, 30'15", since it is equivalent to 1815", would be eqvt to 1815/3600=0.504 degrees.\
+\pard\pardeftab720\partightenfactor0
+
+\fs42 \cf2 Also, be sure to write down the location names as well (you will use them to label your points when displaying). AND, take a selfie (!) that clearly shows the location you're sampling - this step is to ensure that you're not simply reading off the coords from a map, sitting at home! You'll lose points if you don't submit selfies. Alternatively, you can simply take a photo of the location you are sampling, and submit that instead (no need for selfies).\
+2. Now that you have 13 coordinates and their label strings (ie. text descriptions such as "Tommy Trojan", "SAL", "Chipotle"..), you are going to create a KML file (.kml format, which is XML) out of them using a text editor. Specifically, each location will be a 'placemark' in your .kml file (with a label, and coords). {\field{\*\fldinst{HYPERLINK "https://developers.google.com/kml/documentation/kml_tut#placemarks"}}{\fldrslt \cf3 Here}} is more detail. The .kml file with the 13 placemarks is going to be your starter file, for doing visualizations and queries. {\field{\*\fldinst{HYPERLINK "https://bytes.usc.edu/cs585/m22_datadatadata/hw/HW3/data/starter_kml.xml"}}{\fldrslt \cf3 Here}} is a .kml skeleton to get you started (just download, rename and edit it to put in your coords and labels). NOTE - keep your labels to be 15 characters or less (including spaces). {\field{\*\fldinst{HYPERLINK "https://bytes.usc.edu/cs585/m22_datadatadata/hw/HW3/data/starter_kml.txt"}}{\fldrslt \cf3 Here}} is the same .kml skeleton in .txt format, if you'd like to RMB save it instead and rename the file extension from .txt to .xml. NOTE too that in .kml, you specify (long,lat), instead of the expected (lat,long) [after all, longtitude is what corresponds to 'x', and latitude, to 'y']!\
+In the KML file, be sure to place your home, libraries, waterworks (or equivalents if you are not on campus) in their own layer - ie. create three layers.\
+You are going to use Google Earth to visualize the data in your KML file (see #3 below). FYI, as a quick check, you can also visualize it using {\field{\*\fldinst{HYPERLINK "https://kmlviewer.nsspot.net/"}}{\fldrslt \cf3 this}} page :)\
+3. {\field{\*\fldinst{HYPERLINK "https://www.google.com/earth/about/versions/"}}{\fldrslt \cf3 Download Google Earth}} on your laptop, install it, bring it up. Load your .kml file into it - that should display all your sampled locations, on Google Earth's globe :)\
+4. {\field{\*\fldinst{HYPERLINK "https://web.archive.org/web/20220407013150/http://zevross.com/blog/2019/12/04/install-postgres-postgis-and-get-started-with-spatial-sql/"}}{\fldrslt \cf3 Install Postgres+PostGIS}} on your PC/Mac laptop, and browse the docs for the spatial functions.\
+4 (alt). You can also use {\field{\*\fldinst{HYPERLINK "https://dev.mysql.com/doc/refman/5.7/en/spatial-extensions.html"}}{\fldrslt \cf3 MySQL}} if you want, or Oracle 11g+Oracle Spatial, or even {\field{\*\fldinst{HYPERLINK "http://www.bostongis.com/PrinterFriendly.aspx?content_name=spatialite_tut01"}}{\fldrslt \cf3 sqlite}}; if you are familiar with using {\field{\*\fldinst{HYPERLINK "https://docs.microsoft.com/en-us/sql/relational-databases/spatial/spatial-data-sql-server"}}{\fldrslt \cf3 SQL Server}}, that can also help you do the homework. Even {\field{\*\fldinst{HYPERLINK "https://gis.stackexchange.com/questions/38937/how-to-connect-to-postgres-with-qgis"}}{\fldrslt \cf3 QGIS}} can be used to do the HW.\
+4 (alt alt). IF YOU ARE FEELING ADVENTUROUS: as an alternative to installing Oracle or Postgres (or MySQL or sqlite or SQL Server...) on your machine, you can use Postgres or Oracle on the AWS cloud platform (ie. without installing anything on your laptop!) - eg. see {\field{\*\fldinst{HYPERLINK "https://aws.amazon.com/free/?"}}{\fldrslt \cf3 this}} page, and {\field{\*\fldinst{HYPERLINK "https://aws.amazon.com/rds/postgresql/"}}{\fldrslt \cf3 this}} one. Be sure to not leave your DB instance running, when you aren't working on the hw!\
+4 (alt alt alt). Last but not least, do feel free to use GCP for this! Here are some relevant resources:\
+\pard\pardeftab720\partightenfactor0
+
+\fs38 \cf2 * {\field{\*\fldinst{HYPERLINK "https://cloud.google.com/sql/docs/postgres/quickstart"}}{\fldrslt \cf3 https://cloud.google.com/sql/docs/postgres/quickstart}}\
+* {\field{\*\fldinst{HYPERLINK "https://medium.com/google-cloud/postgres-is-incredibly-awesome-c54353b88655"}}{\fldrslt \cf3 https://medium.com/google-cloud/postgres-is-incredibly-awesome-c54353b88655}}\
+* {\field{\*\fldinst{HYPERLINK "https://cloudplatform.googleblog.com/2017/03/Cloud-SQL-for-PostgreSQL-managed-PostgreSQL-for-your-mobile-and-geospatial-applications-in-Google-Cloud.html"}}{\fldrslt \cf3 https://cloudplatform.googleblog.com/2017/03/Cloud-SQL-for-PostgreSQL-managed-PostgreSQL-for-your-mobile-and-geospatial-applications-in-Google-Cloud.html}}\
+* {\field{\*\fldinst{HYPERLINK "https://cloudplatform.googleblog.com/2017/08/Cloud-SQL-for-PostgreSQL-updated-with-new-extensions.html"}}{\fldrslt \cf3 https://cloudplatform.googleblog.com/2017/08/Cloud-SQL-for-PostgreSQL-updated-with-new-extensions.html}}\
+\pard\pardeftab720\partightenfactor0
+
+\fs42 \cf2 5. You will use the spatial db software to execute the following two spatial queries that you'll write:\
+\pard\pardeftab720\partightenfactor0
+
+\fs38 \cf2 \'95 compute the convex hull for your 13 points [a {\field{\*\fldinst{HYPERLINK "http://mathworld.wolfram.com/ConvexHull.html"}}{\fldrslt \cf3 convex hull}} for a set of 2D points is the smallest convex polygon that contains the point set]. If you use Oracle, see {\field{\*\fldinst{HYPERLINK "https://docs.oracle.com/cd/A97630_01/appdev.920/a96630/sdo_aggr.htm"}}{\fldrslt \cf3 this}} page; if you decide to use Postgres, read {\field{\*\fldinst{HYPERLINK "http://postgis.net/docs/ST_ConvexHull.html"}}{\fldrslt \cf3 this}} and {\field{\*\fldinst{HYPERLINK "http://stackoverflow.com/questions/10461179/k-nearest-neighbor-query-in-postgis"}}{\fldrslt \cf3 this}} instead. Use the query's result polygon's coords, to create a polygon in your .kml file (edit the .kml file, add relevant XML to specify the KML polygon's coords). Load this into Google Earth, visually verify that all your points are on/inside the convex hull, then take a screenshot. Note that even your data points happen to have a concave perimeter and/or happen to be self-intersecting, the convex hull, by definition, would be a tight, enclosing boundary (hull) that is a simple convex polygon. The convex hull is a very useful object - eg. see {\field{\*\fldinst{HYPERLINK "https://www.quora.com/What-are-the-real-life-applications-of-convex-hulls"}}{\fldrslt \cf3 this}} discussion.. Note: be sure to specify your polygon's coords as '...-118,34 -118,34.1...' for example, and not '...-118, 34 -118, 34.1...' [in other words, do not separate long,lat with a space after the comma, ie it can't be long, lat].\
+\'95 compute the nearest neighbor of your home/apt/dormroom location [look up the spatial function of your DB, to do this]. Use the query's results, to create a line segment in your .kml file: line(home,nearest_neighbor). Verify this looks correct, using Google Earth; take a snapshot.\
+\'95 for fun (this doesn't fetch points!), compute the centroid of your locations\
+\pard\pardeftab720\partightenfactor0
+
+\fs42 \cf2 Note - it *is* OK to hardcode points, in the above queries! Or, you can create and use a table to store your 13 points in it, then write queries against the table.\
+6. Use {\field{\*\fldinst{HYPERLINK "https://openlayers.org/"}}{\fldrslt \cf3 OpenLayers}} (a JavaScript API) to visualize your location data. The idea is to store your 13 sampled points, via your web browser, in a browser cache area in your local machine, where the data would persist [even after you close the browser]; then you'd read back the stored values, and visualize them, using the OpenLayers API. To store and load points, you'll use 'HTML5 localStorage', which is a key-value based standard WWW {\field{\*\fldinst{HYPERLINK "https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage"}}{\fldrslt \cf3 API.}} In the future, you can use localStorage to persist any other kind of data - browser-based games' states, e-commerce purchases, computations-in-progress, UI choices in your apps...\
+Run this: {\field{\*\fldinst{HYPERLINK "https://bytes.usc.edu/~saty/tools/xem/run.html?x=OpenLayers"}}{\fldrslt \cf3 https://bytes.usc.edu/~saty/tools/xem/run.html?x=OpenLayers}} - cool! It shows a single location (TT!) being plotted. Examine the source code, you will see it uses OpenLayers.js (which is where the OpenLayers API is).\
+If you are having problems w/ the above xem link, run this instead - it won't give you any errors: {\field{\*\fldinst{HYPERLINK "https://bytes.usc.edu/~saty/tools/xem/run.html?x=OpenLayers_v2"}}{\fldrslt \cf3 https://bytes.usc.edu/~saty/tools/xem/run.html?x=OpenLayers_v2}} [it uses a different version of the OpenLayers lib].\
+Also, you can copy the .html (from v2 above) to a local .html, eg. oL_v2.html, then run it using a 'local webserver' {\field{\*\fldinst{HYPERLINK "https://bytes.usc.edu/cs585/m22_datadatadata/hw/HW3/clips/localhost.mp4"}}{\fldrslt \cf3 like so}} [it is VERY useful to know how to create and use a local webserver - this is the EASIEST way!]...\
+The code in my 'xem' page above, is to show you how to do it; you'd need to do it 'for real' by modifying it :) EVEN IF you don't know JS or coding, don't worry - it's easy, and fun, to figure it out! You don't need to any 'big' modifications - you ONLY need to swap out the existing data to put in your own!\
+You'd rearrange/modify the JS code I'm giving you, to do this:\
+\pard\pardeftab720\partightenfactor0
+
+\fs38 \cf2 * create an object (looks like JSON!) to contain your 13 points\
+* use localStorage's setItem() to PUT (store) the data in your laptop\
+* use localStorage's getItem() to GET (retrieve) the data in your laptop\
+* loop through, and plot the data (ie plot your 13 locations)\
+\pard\pardeftab720\partightenfactor0
+
+\fs42 \cf2 If you like, you can do the above, using CodePen [{\field{\*\fldinst{HYPERLINK "https://codepen.io/"}}{\fldrslt \cf3 https://codepen.io/}}] or jsfiddle [{\field{\*\fldinst{HYPERLINK "https://jsfiddle.net/"}}{\fldrslt \cf3 https://jsfiddle.net/}}], and just submit a URL of your code - the grader would simply copy and paste your URL into their browser, and be able to see your code and the result. If you do this, submit a README file with your link, instead of submitting your own .html.\
+7. Install R, then RStudio: {\field{\*\fldinst{HYPERLINK "https://techvidvan.com/tutorials/install-r/#:~:text=Step%20%E2%80%93%201%3A%20With%20R%2D,and%20follow%20the%20installation%20instructions"}}{\fldrslt \cf3 https://techvidvan.com/tutorials/install-r/#:~:text=Step%20%E2%80%93%201%3A%20With%20R%2D,and%20follow%20the%20installation%20instructions}}.\
+Next, bring up RStudio - it's a cool IDE for executing R code :)\
+\pard\pardeftab720\partightenfactor0
+\cf2 {{\NeXTGraphic RStudio.jpg \width13810 \height7570 \noorient \appleattachmentpadding0 \appleembedtype0 \appleaqc
+}¬}\pard\pardeftab720\partightenfactor0
+\cf2  \
+[image from {\field{\*\fldinst{HYPERLINK "https://bytes.usc.edu/cs585/m22_datadatadata/hw/HW3/R/R_andGIS_20180212v3.pdf"}}{\fldrslt \cf3 here}}]\
+You are going to be using the {\field{\*\fldinst{HYPERLINK "https://rstudio.github.io/leaflet/"}}{\fldrslt \cf3 R port}} of the popular {\field{\*\fldinst{HYPERLINK "https://leafletjs.com/"}}{\fldrslt \cf3 'leaflet' map library}} [written by a Ukrainian!!], for visualizing your 13 sampled locations. In the RStudio file menu, open {\field{\*\fldinst{HYPERLINK "https://bytes.usc.edu/cs585/m22_datadatadata/hw/HW3/R/leaflet.R"}}{\fldrslt \cf3 this}} .R file [save the .R file to your HW3 area first, using RMB on the 'this' link].\
+Uncomment ##install.packages("leaflet"), to let RStudio automagically download (from an online R repository it knows about) and install leaflet. From the next time on, you can comment that line out, to avoid re-installing it over and over.\
+After uncommenting, select all the code (Ctrl a), then 'Run' it - cool!:\
+\pard\pardeftab720\partightenfactor0
+
+\fs36 \cf2 \
+{{\NeXTGraphic leaflet.jpg \width14560 \height3780 \noorient \appleattachmentpadding0 \appleembedtype0 \appleaqc
+}¬}\
+\pard\pardeftab720\partightenfactor0
+
+\fs42 \cf2 Look at the code (in R, we use <- instead of ==) - we create a leaflet object called m, then load map data (addTiles()), then add markers for our data (addCircleMarkers()), then display it (by simply 'printing' m, Python-style).\
+Edit the marker data, to make it be your 13 locations. Take a screenshot, save your .R file.\
+In the future, you can do a LOT more with R and spatial data - all using the RStudio IDE you now have :) Eg. read {\field{\*\fldinst{HYPERLINK "https://bytes.usc.edu/cs585/m22_datadatadata/hw/HW3/R/IntroSpatialDataAnalysisInR.pdf"}}{\fldrslt \cf3 this}} [where R packages called rgdal and rgeos are used for map visualization] and {\field{\*\fldinst{HYPERLINK "https://bytes.usc.edu/cs585/m22_datadatadata/hw/HW3/R/AppliedSpatialDataAnalysisWithR.pdf"}}{\fldrslt \cf3 this}} [which shows how to use rgdal and many more packages].\
+AND, you can start learning more R (which as you can see, is a LOT like Python!) - it is heavily used in data analysis (R was purpose-built for {\field{\*\fldinst{HYPERLINK "https://mran.microsoft.com/documents/what-is-r"}}{\fldrslt \cf3 data handling}}, after all!). In a sense, R is like the ultimate statistics calculator ever!\
+8. Using SGM 123 as the center, compute (don't/can't use GPS!) a set (sequence) of lat-long (ie. spatial) co-ordinates that lie along a pretty {\field{\*\fldinst{HYPERLINK "https://www.google.com/search?q=Spirograph+curve&num=100&source=lnms&tbm=isch"}}{\fldrslt \cf3 Spirograph\'99}} curve :)\
+Create a new KML file with Spirograph\'99 curve points [see below], convert the KML to an ESRI 'shapefile', visualize the shapefile data using ArcGIS Online, and submit these four items: your point generation code (see below), the resulting .kml file ("spiro.kml"), shapefile (this needs to be a .zip) and a screenshot ("spiro.jpg" or "spiro.png").\
+DEN students: you can use as the center, a different spatial coordinate (eg. that of your home).\
+To convert your .kml into a shapefile, use this online converter: {\field{\*\fldinst{HYPERLINK "https://mygeodata.cloud/converter/kml-to-shp"}}{\fldrslt \cf3 https://mygeodata.cloud/converter/kml-to-shp}} - the result will be a .zip [which is what we call 'shapefile'], which will contain within it, shape data (.shp), a relational table (.dbf), and other optional files (.shx, .prj, .cpg). Extra fyi - {\field{\*\fldinst{HYPERLINK "http://desktop.arcgis.com/en/arcmap/10.3/manage-data/shapefiles/what-is-a-shapefile.htm"}}{\fldrslt \cf3 here}} is a page on shapefiles, and {\field{\*\fldinst{HYPERLINK "http://desktop.arcgis.com/en/arcmap/10.3/manage-data/shapefiles/shapefile-file-extensions.htm"}}{\fldrslt \cf3 this}} talks about the various components (.shp, .dbf etc) of a shapefile.\
+Once you have your shapefile, you can upload it to ArcGIS' online map creator to view your Spirograph\'99 curve-shaped points. To do so, log on to ArcGIS [after creating a free 'public' account], at {\field{\*\fldinst{HYPERLINK "https://www.arcgis.com/"}}{\fldrslt \cf3 https://www.arcgis.com/}}, then use the 'Map' tab - {\field{\*\fldinst{HYPERLINK "https://www.arcgis.com/home/webmap/viewer.html?useExisting=1"}}{\fldrslt \cf3 https://www.arcgis.com/home/webmap/viewer.html?useExisting=1}}. Do 'Add -> Add Layer from File', and upload your shapefile .zip, you should see your data overlaid on a map. {\field{\*\fldinst{HYPERLINK "https://bytes.usc.edu/cs585/m22_datadatadata/hw/HW3/spiro/ArcGIS_spiro.png"}}{\fldrslt \cf3 Here}} is a screenshot of roughly what to expect. For fun, you can also upload your shapefile here, to view it: {\field{\*\fldinst{HYPERLINK "https://mapshaper.org/"}}{\fldrslt \cf3 https://mapshaper.org/}}\
+For the Spirograph\'99 curve point creation, use the following parametric equations (with R=8, r=1, a=4 -- do not change these values :)):\
+\pard\pardeftab720\partightenfactor0
+
+\f1\fs32 \cf2 \cb4 x(t) = (R+r)*cos((r/R)*t) - a*cos((1+r/R)*t)\
+y(t) = (R+r)*sin((r/R)*t) - a*sin((1+r/R)*t)\
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb1 Using the above equations, loop through t from 0.00 to n*Pi (eg. 2*Pi; note that 'n' might need to be more than 2, for the curve to close on itself; and, t is in radians, not degrees), in steps of 0.01. That will give you the sequence of (x,y) points that make up the Spiro curve, which would/should look like the curve in the right side of the screengrab below, when R=8, r=1, a=4 (my JavaScript code for the point generation+plotting loop is on the left):\
+\pard\pardeftab720\partightenfactor0
+\cf2 {{\NeXTGraphic spiro.png \width6000 \height2820 \noorient \appleattachmentpadding0 \appleembedtype0 \appleaqc
+}¬}\pard\pardeftab720\partightenfactor0
+\cf2 \
+Note - your figure MUST resemble the above, ie. it MUST have 8 loops.\
+In order to center the Spirograph\'99 at a given location [SGM123 or other], you need to ADD each (x,y) curve point to the (lat,long) of the centering location - that will give you valid Spiro-based spatial coords for use in your .kml file. You can use any coding language you want, to generate (and visualize) the curve's coords: JavaScript, C/C++, Java, Python, {\field{\*\fldinst{HYPERLINK "https://docs.oracle.com/cd/B28359_01/server.111/b28285/sqlqr02.htm"}}{\fldrslt \cf3 SQL}}, MATLAB, Scala, Haskell, Ruby, R.. You can also use Excel, SAS, SPSS, JMP etc., for computing [and plotting, if you want to check the results visually] the Spirograph\'99 curve points.\
+Payoff - what you'll see is the Spirograph\'99 curve, superposed on the land imagery - pretty!\
+PS: {\field{\*\fldinst{HYPERLINK "https://www.google.com/search?q=Spirograph+curve&ie=utf-8&oe=utf-8"}}{\fldrslt \cf3 Here}} is MUCH more on Spirograph\'99 (hypocycloid and epicycloid) curves if you are curious. Also, for fun, try changing any of R, r, a in the code for the equations above [you don't need to submit the results]!\
+\pard\pardeftab720\partightenfactor0
+
+\fs30 \cf2 \
+\pard\pardeftab720\partightenfactor0
+
+\fs42 \cf2 Here is what you need to submit (as a single .zip file):\
+\pard\pardeftab720\partightenfactor0
+
+\fs38 \cf2 * your .kml file from step 5 above - with the placemarks, convex hull and nearest-neighbor line segments (1 point)\
+* your selfie pics that 'prove' you actually collected the point locations on site (.jpg or .png) (no points for selfies submission, but, -2 points IF YOU DON'T SUBMIT ALL OF THEM); if you are not comfortable submitting selfies, you can take a pic of the location (without any identifying info about you) and submit that (again, the point of asking for a pic is to have you visit the place, which makes it a more authentic data collection experience)\
+* a text file (.txt or .sql) with your two queries from step 5 - table creation commands (if you use Postgres and directly specify points in your queries, you won't have table creation commands, in which case you wouldn't need to worry about this part), and the queries themselves; a screenshot that shows the locations, nearest neighbor line, and the convex hull polygon (2 points)\
+* a screenshot of your 13 locations, plus, a .html file (with the JS OpenLayers code) from step 6, or a CodePen/jsfiddle link (1 point)\
+* from step 7: a screenshot of the visualized locations, plus your .R script (1 point)\
+* a screenshot of your Spirograph\'99 result from step 8, plus the source code in text form (eg. spiro.\{js,py,java,cpp\}), .kml, .shp (1 point)\
+\pard\pardeftab720\partightenfactor0
+
+\fs30 \cf2 \
+\pard\pardeftab720\partightenfactor0
+
+\fs42 \cf2 HAVE FUN! From here on out, you know how to create custom overlays (via KML files containing vector symbols constructed from points, lines and polygons, and its shapefile equivalent) on a map, and perform spatial queries on the underlying data :)\
+\pard\pardeftab720\partightenfactor0
+
+\fs30 \cf2 \
+\
+}

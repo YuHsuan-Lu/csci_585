@@ -1,0 +1,38 @@
+# CSCI:585 - Homework 1
+# Name: Yu-Hsuan Lu, USC NETID:ylu01101
+
+The design choices I made for designing the ER model:
+
+(1) A student can take multiple classes and projects.
+    - A bridge table between students and classes called "Enrollment"
+    - Each occurrence of "Enrollment" corresponds to one student's choice of class, and also contain additional information.
+    - A table called "Books" has foreign key "ENROLLMENT_ID" stores every book assigned to every class. Additionally, multiple classes can be assigned to the same book, and a class can be assigned to only one book.
+(2) Every project is done by a group of four, and a group can only take one project. Since Students can take multiple projects, a student might be in different group.
+(3) Apparatus of project: 
+    - There are three table involved in:
+    - "Parts":
+        - Store the information of different kinds of parts.
+        - Same kind of part is offered by the same supplier.
+    - "Apparatus" 
+        - BOX_ID and APPARATUS_ID are the composite primary key.
+        - Each group only have one box containing all the parts needed for the project taken.
+    - "Suppliers" 
+        - Store the information of the suppliers.
+(4) Rating:
+    - There are three table involved in:
+    - "Instructor_Rating"
+        - Students can rate the instructor they met at the class.
+        - An instructor is rated for their teaching.
+    - "Groups"
+        - Every member of the group will rate the project.
+    - "Enrollments"
+        - Every students erolling in the class should rate the class.
+(5) A room can only be occupied by a class or a project at one time.
+    - "Rooms" lists all rooms and its location in the school
+    - "Schedule" stores where and when each class and project uses.
+    - "Rooms" and "Schedule" together provide a schedule that will list where and when projects/classes will be.
+(6) "Instructor" stores the information of a instructor.
+    - Assume teaching and supervising has the same paying rate
+    - (HOURS_OF_TEACHING + HOURS_OF_SUPERVISING)*PAYING_RATE = WAGE
+    - We can simply revise the value stored in PAYING_RATE if school policy changed.
+(7) Student cannot borrow the book which is not available in library,DATE_OF_ISSUE and DATE_OF_RETURN can be used to examine whether the book is returned within 2 weeks.
